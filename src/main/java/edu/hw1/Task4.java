@@ -1,6 +1,7 @@
-package hw1;
+package edu.hw1;
 
-public class Task4 {
+public final class Task4 {
+    @SuppressWarnings("MagicNumber")
     public static String fixString(String brokenString) {
         StringBuilder res = new StringBuilder();
 
@@ -14,5 +15,8 @@ public class Task4 {
         }
 
         return res.toString();
+    }
+
+    private Task4() {
     }
 }

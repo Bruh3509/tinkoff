@@ -1,6 +1,7 @@
-package hw1;
+package edu.hw1;
 
-public class Task1 {
+public final class Task1 {
+    @SuppressWarnings("MagicNumber")
     public static int minutesToSeconds(String video) {
         String[] videoArr = video.split(":");
         int minutes = Integer.parseInt(videoArr[0]);
@@ -14,5 +15,8 @@ public class Task1 {
         }
 
         return minutes * 60 + seconds;
+    }
+
+    private Task1() {
     }
 }

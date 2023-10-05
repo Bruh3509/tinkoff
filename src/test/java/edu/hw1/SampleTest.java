@@ -1,4 +1,4 @@
-package hw1;
+package edu.hw1;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
@@ -117,17 +117,57 @@ public class SampleTest {
         int palindrome2 = 13001120;
         int palindrome3 = 23336014;
         int palindrome4 = 11;
+        int palindrome5 = 123;
+        int palindrome6 = 12521;
+        int palindrome7 = 121212;
 
         // act
         boolean res1 = Task5.isPalindromeDescendant(palindrome1);
         boolean res2 = Task5.isPalindromeDescendant(palindrome2);
         boolean res3 = Task5.isPalindromeDescendant(palindrome3);
         boolean res4 = Task5.isPalindromeDescendant(palindrome4);
+        boolean res5 = Task5.isPalindromeDescendant(palindrome5);
+        boolean res6 = Task5.isPalindromeDescendant(palindrome6);
+        boolean res7 = Task5.isPalindromeDescendant(palindrome7);
 
         // assert
         assertThat(res1).isTrue();
         assertThat(res2).isTrue();
         assertThat(res3).isTrue();
         assertThat(res4).isTrue();
+        assertThat(res5).isFalse();
+        assertThat(res6).isTrue();
+        assertThat(res7).isTrue();
+    }
+
+    @Test
+    @DisplayName("Task6")
+    void testCountKaprekars() {
+        // arrange
+        int num1 = 3524;
+        int num2 = 6621;
+        int num3 = 6554;
+        int num4 = 1234;
+        int num5 = 6174;
+        int num6 = 1000;
+        int num7 = 10000;
+
+        // act
+        int resultCount1 = Task6.countKaprekars(num1, 0);
+        int resultCount2 = Task6.countKaprekars(num2, 0);
+        int resultCount3 = Task6.countKaprekars(num3, 0);
+        int resultCount4 = Task6.countKaprekars(num4, 0);
+        int resultCount5 = Task6.countKaprekars(num5, 0);
+        int resultCount6 = Task6.countKaprekars(num6, 0);
+        int resultCount7 = Task6.countKaprekars(num7, 0);
+
+        // assert
+        assertThat(resultCount1).isEqualTo(3);
+        assertThat(resultCount2).isEqualTo(5);
+        assertThat(resultCount3).isEqualTo(4);
+        assertThat(resultCount4).isEqualTo(3);
+        assertThat(resultCount5).isEqualTo(0);
+        assertThat(resultCount6).isEqualTo(-1);
+        assertThat(resultCount7).isEqualTo(-1);
     }
 }
