@@ -15,46 +15,31 @@ public class Task8 {
         return true;
     }
 
+    @SuppressWarnings({"CyclomaticComplexity", "ReturnCount"})
     private static boolean isCurrentCanCapture(int[][] board, int i, int j) {
-        if (i - 2 >= 0 && j - 1 >= 0) {
-            if (board[i - 2][j - 1] == 1) {
-                return true;
-            }
+        if (i - 2 >= 0 && j - 1 >= 0 && board[i - 2][j - 1] == 1) {
+            return true;
         }
-        if (i - 2 >= 0 && j + 1 < board.length) {
-            if (board[i - 2][j + 1] == 1) {
-                return true;
-            }
+        if (i - 2 >= 0 && j + 1 < board.length && board[i - 2][j + 1] == 1) {
+            return true;
         }
-        if (i - 1 >= 0 && j - 2 >= 0) {
-            if (board[i - 1][j - 2] == 1) {
-                return true;
-            }
+        if (i - 1 >= 0 && j - 2 >= 0 && board[i - 1][j - 2] == 1) {
+            return true;
         }
-        if (i - 1 >= 0 && j + 2 < board.length) {
-            if (board[i - 1][j + 2] == 1) {
-                return true;
-            }
+        if (i - 1 >= 0 && j + 2 < board.length && board[i - 1][j + 2] == 1) {
+            return true;
         }
-        if (i + 1 < board.length && j - 2 >= 0) {
-            if (board[i + 1][j - 2] == 1) {
-                return true;
-            }
+        if (i + 1 < board.length && j - 2 >= 0 && board[i + 1][j - 2] == 1) {
+            return true;
         }
-        if (i + 1 < board.length && j + 2 < board.length) {
-            if (board[i + 1][j + 2] == 1) {
-                return true;
-            }
+        if (i + 1 < board.length && j + 2 < board.length && board[i + 1][j + 2] == 1) {
+            return true;
         }
-        if (i + 2 < board.length && j - 1 >= 0) {
-            if (board[i + 2][j - 1] == 1) {
-                return true;
-            }
+        if (i + 2 < board.length && j - 1 >= 0 && board[i + 2][j - 1] == 1) {
+            return true;
         }
         if (i + 2 < board.length && j + 1 < board.length) {
-            if (board[i + 2][j + 1] == 1) {
-                return true;
-            }
+            return board[i + 2][j + 1] == 1;
         }
 
         return false;
