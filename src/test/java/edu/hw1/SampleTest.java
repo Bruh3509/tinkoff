@@ -170,4 +170,85 @@ public class SampleTest {
         assertThat(resultCount6).isEqualTo(-1);
         assertThat(resultCount7).isEqualTo(-1);
     }
+
+    @Test
+    @DisplayName("Task7.rotateRight")
+    void testRotateRight() {
+        // arrange
+        int num1 = 8;
+        int shift1 = 1;
+        int num2 = 0;
+        int shift2 = 10;
+
+        // act
+        int res1 = Task7.rotateRight(num1, shift1);
+        int res2 = Task7.rotateRight(num2, shift2);
+
+        // assert
+        assertThat(res1).isEqualTo(4);
+        assertThat(res2).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("Task7.rotateLeft")
+    void testRotateLeft() {
+        // arrange
+        int num1 = 16;
+        int shift1 = 1;
+        int num2 = 17;
+        int shift2 = 2;
+        int num3 = 0;
+        int shift3 = 10;
+
+        // act
+        int res1 = Task7.rotateLeft(num1, shift1);
+        int res2 = Task7.rotateLeft(num2, shift2);
+        int res3 = Task7.rotateLeft(num3, shift3);
+
+        // assert
+        assertThat(res1).isEqualTo(1);
+        assertThat(res2).isEqualTo(6);
+        assertThat(res3).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("Task8")
+    void testKnightBoardCapture() {
+        // arrange
+        int[][] board1 = {
+            {0, 0, 0, 1, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 1, 0, 0, 0, 1, 0, 0},
+            {0, 0, 0, 0, 1, 0, 1, 0},
+            {0, 1, 0, 0, 0, 1, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 1, 0, 0, 0, 0, 0, 1},
+            {0, 0, 0, 0, 1, 0, 0, 0}};
+        int[][] board2 = {{1, 0, 1, 0, 1, 0, 1, 0},
+            {0, 1, 0, 1, 0, 1, 0, 1},
+            {0, 0, 0, 0, 1, 0, 1, 0},
+            {0, 0, 1, 0, 0, 1, 0, 1},
+            {1, 0, 0, 0, 1, 0, 1, 0},
+            {0, 0, 0, 0, 0, 1, 0, 1},
+            {1, 0, 0, 0, 1, 0, 1, 0},
+            {0, 0, 0, 1, 0, 1, 0, 1}};
+        int[][] board3 = {{0, 0, 0, 0, 1, 0, 0, 0},
+            {0, 0, 0, 0, 0, 1, 0, 0},
+            {0, 0, 0, 1, 0, 0, 0, 0},
+            {1, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 1, 0, 0, 0},
+            {0, 0, 0, 0, 0, 1, 0, 0},
+            {0, 0, 0, 0, 0, 1, 0, 0},
+            {1, 0, 0, 0, 0, 0, 0, 0}};
+
+        // act
+        boolean res1 = Task8.knightBoardCapture(board1);
+        boolean res2 = Task8.knightBoardCapture(board2);
+        boolean res3 = Task8.knightBoardCapture(board3);
+
+        // assert
+        assertThat(res1).isTrue();
+        assertThat(res2).isFalse();
+        assertThat(res3).isFalse();
+    }
 }
