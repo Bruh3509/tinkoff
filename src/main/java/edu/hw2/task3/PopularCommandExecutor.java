@@ -1,6 +1,11 @@
-package edu.hw2;
+package edu.hw2.task3;
+
+import edu.hw2.task3.ConnectionException;
+import edu.hw2.task3.ConnectionManager;
+import java.util.logging.Logger;
 
 public final class PopularCommandExecutor {
+    public static final Logger LOGGER = Logger.getLogger("Connection Logger");
     private final ConnectionManager manager;
     private final int maxAttempts;
 
@@ -21,6 +26,8 @@ public final class PopularCommandExecutor {
                 return;
             } catch (ConnectionException exception) {
                 if (curAttempts == 0) {
+                    LOGGER.info("Fail to execute command " + command + ".\n");
+                    throw new ConnectionException(exception);
                 }
             }
         }

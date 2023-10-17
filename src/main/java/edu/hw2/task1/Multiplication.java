@@ -1,4 +1,4 @@
-package edu.hw2;
+package edu.hw2.task1;
 
 public record Multiplication(double firstOperand, double secondOperand) implements Expression {
     public Multiplication(Expression firstOperand, Expression secondOperand) {

@@ -1,6 +1,8 @@
 package edu.hw2;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import edu.hw2.task1.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

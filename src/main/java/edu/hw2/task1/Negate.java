@@ -1,4 +1,4 @@
-package edu.hw2;
+package edu.hw2.task1;
 
 public record Negate(double negateConstant) implements Expression {
     public Negate(Expression negateConstant) {
