@@ -1,7 +1,5 @@
 package edu.hw2.task3;
 
-import edu.hw2.task3.ConnectionException;
-import edu.hw2.task3.ConnectionManager;
 import java.util.logging.Logger;
 
 public final class PopularCommandExecutor {

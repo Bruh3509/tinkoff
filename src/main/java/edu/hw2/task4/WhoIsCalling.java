@@ -6,4 +6,7 @@ public class WhoIsCalling {
         StackTraceElement[] elements = e.getStackTrace();
         return new CallingInfo(elements[1].getClassName(), elements[1].getMethodName());
     }
+
+    private WhoIsCalling() {
+    }
 }

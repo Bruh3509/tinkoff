@@ -16,7 +16,7 @@ public class FaultyConnection implements Connection {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         PopularCommandExecutor.LOGGER.info("Connection has been closed.\n");
     }
 }

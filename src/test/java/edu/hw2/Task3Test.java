@@ -8,8 +8,8 @@ public class Task3Test {
     private static final int TEST_COUNT = 100;
 
     @Test
-    @DisplayName("DefaultConnectionManager")
-    void testDefaultConnectionManager() {
+    @DisplayName("Executor(DefaultConnectionManager)")
+    void testExecutorDefaultConnectionManager() {
         // arrange
         int attempts = 2;
         var connectionManager = new DefaultConnectionManager();
@@ -25,8 +25,8 @@ public class Task3Test {
     }
 
     @Test
-    @DisplayName("FaultyConnectionManager")
-    void testFaultyConnectionManager() {
+    @DisplayName("Executor(FaultyConnectionManager)")
+    void testExecutorFaultyConnectionManager() {
         // arrange
         int attempts = 3;
         var connectionManager = new FaultyConnectionManager();
