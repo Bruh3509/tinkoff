@@ -5,9 +5,4 @@ public record SuccessfulGuess(String curWord, int curMistakes) implements GuessR
     public String state() {
         return String.format("Hit!\nThe word: %s\n", curWord);
     }
-
-    @Override
-    public int mistakes() {
-        return curMistakes;
-    }
 }

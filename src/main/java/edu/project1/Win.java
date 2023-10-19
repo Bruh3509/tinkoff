@@ -5,9 +5,4 @@ public record Win(String answer, int curMistakes) implements GuessResult {
     public String state() {
         return String.format("Hit!\nThe word: %s\nYou won!\n", answer);
     }
-
-    @Override
-    public int mistakes() {
-        return curMistakes;
-    }
 }

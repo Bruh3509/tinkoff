@@ -1,17 +1,16 @@
 package edu.project1;
 
 import java.util.Arrays;
-import java.util.SequencedSet;
 
 public class Session {
-    private final String ANSWER;
-    private final int MAX_MISTAKES;
-    private char[] userAnswer;
+    private final String answer;
+    private final int maxMistakes;
+    private final char[] userAnswer;
     private int curMistakes;
 
     public Session(String answer, int maxMistakes) {
-        this.ANSWER = answer;
-        this.MAX_MISTAKES = maxMistakes;
+        this.answer = answer;
+        this.maxMistakes = maxMistakes;
 
         curMistakes = 0;
         userAnswer = new char[answer.length()];
@@ -19,22 +18,31 @@ public class Session {
     }
 
     public GuessResult guess(char c) {
-        for (int i = 0; i < ANSWER.length(); ++i) {
-            if (ANSWER.charAt(i) == c) {
-                userAnswer[i] = c;
-                if (new String(userAnswer).contains("*")) {
-                    return new SuccessfulGuess(new String(userAnswer), curMistakes);
-                }
+        if (isHit(c)) {
+            if (new String(userAnswer).contains("*")) {
+                return new SuccessfulGuess(new String(userAnswer), curMistakes);
+            } else {
                 return new Win(new String(userAnswer), curMistakes);
             }
         }
-        if (++curMistakes == MAX_MISTAKES) {
+        if (++curMistakes == maxMistakes) {
             return new Defeat(new String(userAnswer), curMistakes);
         }
-        return new WrongGuess(new String(userAnswer), curMistakes, MAX_MISTAKES);
+        return new WrongGuess(new String(userAnswer), curMistakes, maxMistakes);
     }
 
     public GuessResult giveUp() {
         return new Defeat(new String(userAnswer), curMistakes);
+    }
+
+    private boolean isHit(char c) {
+        boolean isGuessed = false;
+        for (int i = 0; i < answer.length(); ++i) {
+            if (answer.charAt(i) == c) {
+                userAnswer[i] = c;
+                isGuessed = true;
+            }
+        }
+        return isGuessed;
     }
 }

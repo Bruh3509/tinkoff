@@ -7,9 +7,4 @@ public record WrongGuess(String curWord, int curMistakes, int maxMistakes) imple
             curMistakes, maxMistakes, curWord
         );
     }
-
-    @Override
-    public int mistakes() {
-        return curMistakes;
-    }
 }
