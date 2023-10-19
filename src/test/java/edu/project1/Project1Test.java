@@ -117,4 +117,41 @@ public class Project1Test {
         assertThat(curMistakes + 1).isEqualTo(resCurMistakes);
         assertThat(userAnswer).isEqualTo(resUserAnswer);
     }
+
+    @Test
+    @DisplayName("Correct State Change Defeat Guess")
+    void testDefeatStateChange() {
+        // arrange
+        Session session = new Session(ANSWER, MAX_MISTAKES);
+        ConsoleHangman hangman = new ConsoleHangman(session, System.in);
+        GuessResult returnResult;
+
+        // act
+        hangman.tryGuess("a", null);
+        hangman.tryGuess("a", null);
+        hangman.tryGuess("a", null);
+        hangman.tryGuess("a", null);
+        returnResult = hangman.tryGuess("a", null);
+
+        // assert
+        assertEquals(returnResult.getClass(), Defeat.class);
+    }
+
+    @Test
+    @DisplayName("Correct State Change Win Guess")
+    void testWinStateChange() {
+        // arrange
+        Session session = new Session(ANSWER, MAX_MISTAKES);
+        ConsoleHangman hangman = new ConsoleHangman(session, System.in);
+        GuessResult returnResult;
+
+        // act
+        hangman.tryGuess("s", null);
+        hangman.tryGuess("m", null);
+        hangman.tryGuess("t", null);
+        returnResult = hangman.tryGuess("h", null);
+
+        // assert
+        assertEquals(returnResult.getClass(), Win.class);
+    }
 }
