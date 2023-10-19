@@ -9,6 +9,9 @@ public class Session {
     private int curMistakes;
 
     public Session(String answer, int maxMistakes) {
+        if (answer == null || answer.isEmpty()) {
+            throw new NotValidStringException();
+        }
         this.answer = answer;
         this.maxMistakes = maxMistakes;
 
@@ -33,6 +36,14 @@ public class Session {
 
     public GuessResult giveUp() {
         return new Defeat(new String(userAnswer), curMistakes);
+    }
+
+    public String getUserAnswer() {
+        return new String(userAnswer);
+    }
+
+    public int getCurMistakes() {
+        return curMistakes;
     }
 
     private boolean isHit(char c) {

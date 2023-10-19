@@ -18,13 +18,20 @@ public class ConsoleHangman {
     public void run() {
         GuessResult curResult = new SuccessfulGuess("", 0);
         do {
+            LOGGER.info("Guess the letter: \n");
             String nextInput = input.next();
-            if (nextInput.equals(CONCIDE_COMMAND)) {
-                curResult = session.giveUp();
-            } else if (nextInput.length() == 1) {
-                curResult = session.guess(nextInput.charAt(0));
-                LOGGER.info(curResult.state());
-            }
-        } while (curResult.getClass() != Win.class && curResult.getClass() != Defeat.class);
+            curResult = tryGuess(nextInput, curResult);
+        } while (!curResult.getClass().equals(Win.class) && !curResult.getClass().equals(Defeat.class));
+    }
+
+    GuessResult tryGuess(String input, GuessResult curGuessResult) {
+        GuessResult returnResult = curGuessResult;
+        if (input.equals(CONCIDE_COMMAND)) {
+            returnResult = session.giveUp();
+        } else if (input.length() == 1) {
+            returnResult = session.guess(input.charAt(0));
+            LOGGER.info(returnResult.state());
+        }
+        return returnResult;
     }
 }
