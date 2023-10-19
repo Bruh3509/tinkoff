@@ -9,7 +9,7 @@ public record Defeat(String curWord, int maxMistakes) implements GuessResult {
     }
 
     @Override
-    public int attempts() {
-        return 0;
+    public int mistakes() {
+        return maxMistakes;
     }
 }
