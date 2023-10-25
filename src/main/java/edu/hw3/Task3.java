@@ -17,4 +17,7 @@ public class Task3 {
 
         return resultMap;
     }
+
+    private Task3() {
+    }
 }
