@@ -1,11 +1,11 @@
-package edu.hw3;
+package edu.hw3.Task5;
 
 import java.util.Arrays;
 
 public class Task5 {
     private static final String DESC_ORDER = "DESC";
 
-    public static String[] parseContacts(String[] contacts, String order) {
+    public static Contact[] parseContacts(String[] contacts, String order) {
         int orderNum;
         if (order.equals(DESC_ORDER)) {
             orderNum = -1;
@@ -21,7 +21,13 @@ public class Task5 {
                 * contact1Split[contact1Split.length - 1].compareTo(contact2Split[contact2Split.length - 1]);
         });
 
-        return contacts;
+        Contact[] contactsObject = new Contact[contacts.length];
+        for (int i = 0; i < contacts.length; ++i) {
+            final var contact = contacts[i].split(" ");
+            contactsObject[i] = new Contact(contact[0], contact.length == 1 ? "" : contact[1]);
+        }
+
+        return contactsObject;
     }
 
     private Task5() {

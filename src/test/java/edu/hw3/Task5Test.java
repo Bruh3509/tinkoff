@@ -1,6 +1,8 @@
 package edu.hw3;
 
 import static org.assertj.core.api.Assertions.*;
+import edu.hw3.Task5.Contact;
+import edu.hw3.Task5.Task5;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,18 +22,30 @@ public class Task5Test {
         String contacts4Sort = "ASC";
 
         // act
-        String[] resultContacts1 = Task5.parseContacts(contacts1, contacts1Sort);
-        String[] resultContacts2 = Task5.parseContacts(contacts2, contacts2Sort);
-        String[] resultContacts3Asc = Task5.parseContacts(contacts3, contacts3Sort1);
-        String[] resultContacts3Desc = Task5.parseContacts(contacts3, contacts3Sort2);
-        String[] resultContacts4 = Task5.parseContacts(contacts4, contacts4Sort);
+        final var resultContacts1 = Task5.parseContacts(contacts1, contacts1Sort);
+        final var resultContacts2 = Task5.parseContacts(contacts2, contacts2Sort);
+        final var resultContacts3Asc = Task5.parseContacts(contacts3, contacts3Sort1);
+        final var resultContacts3Desc = Task5.parseContacts(contacts3, contacts3Sort2);
+        final var resultContacts4 = Task5.parseContacts(contacts4, contacts4Sort);
 
         // assert
-        assertThat(resultContacts1).isEqualTo(new String[] {"Thomas Aquinas", "Rene Descartes", "David Hume",
-            "John Locke"});
-        assertThat(resultContacts2).isEqualTo(new String[] {"Carl Gauss", "Leonhard Euler", "Paul Erdos"});
+        assertThat(resultContacts1).isEqualTo(new Contact[] {
+            new Contact("Thomas", "Aquinas"),
+            new Contact("Rene", "Descartes"),
+            new Contact("David", "Hume"),
+            new Contact("John", "Locke")
+        });
+        assertThat(resultContacts2).isEqualTo(new Contact[] {
+            new Contact("Carl", "Gauss"),
+            new Contact("Leonhard", "Euler"),
+            new Contact("Paul", "Erdos")
+        });
         assertThat(resultContacts3Asc).isEmpty();
         assertThat(resultContacts3Desc).isEmpty();
-        assertThat(resultContacts4).isEqualTo(new String[] {"Carl", "Leonardo Euler", "Paul"});
+        assertThat(resultContacts4).isEqualTo(new Contact[] {
+            new Contact("Carl", ""),
+            new Contact("Leonardo", "Euler"),
+            new Contact("Paul", "")
+        });
     }
 }
