@@ -104,4 +104,14 @@ public class AllTasksTest {
         // assert
         assertThrows(NullPointerException.class, () -> AllTasks.task4(animals));
     }
+
+    @Test
+    @DisplayName("Task5 Test")
+    void testTask5() {
+        // act
+        final var sex = AllTasks.task5(ANIMALS);
+
+        // assert
+        assertThat(sex).isEqualTo(Animal.Sex.M);
+    }
 }

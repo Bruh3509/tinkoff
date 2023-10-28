@@ -49,21 +49,20 @@ public class AllTasks {
         }
     }
 
-    /*
     public static Animal.Sex task5(Collection<Animal> animals) {
-        int f = 0;
-        int m = 0;
-        animals
-            .stream()
-            .collect(animal -> animal == Animal.Sex.F)
-            .count();
-        animals
-            .stream()
-            .collect(animal -> animal.sex() == Animal.Sex.M)
-            .count();
+        return
+            animals
+                .stream()
+                .filter(animal -> animal.sex() == Animal.Sex.F)
+                .count()
+                >
+                animals
+                    .stream()
+                    .filter(animal -> animal.sex() == Animal.Sex.M)
+                    .count()
+                ? Animal.Sex.F : Animal.Sex.M;
     }
 
-     */
     private AllTasks() {
     }
 }
