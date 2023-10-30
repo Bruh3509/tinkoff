@@ -1,11 +1,11 @@
 package edu.hw4;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -43,18 +43,12 @@ public class AllTasks {
         }
     }
 
-    public static Animal.Sex task5(Collection<Animal> animals) { // TODO
-        return
-            animals
-                .stream()
-                .filter(animal -> animal.sex() == Animal.Sex.F)
-                .count()
-                >
-                animals
-                    .stream()
-                    .filter(animal -> animal.sex() == Animal.Sex.M)
-                    .count()
-                ? Animal.Sex.F : Animal.Sex.M;
+    public static Animal.Sex task5(Collection<Animal> animals) {
+        final var sexMap = animals
+            .stream()
+            .collect(Collectors.groupingBy(Animal::sex, Collectors.counting()));
+
+        return sexMap.get(Animal.Sex.M) >= sexMap.get(Animal.Sex.F) ? Animal.Sex.M : Animal.Sex.F;
     }
 
     public static Map<Animal.Type, Animal> task6(Collection<Animal> animals) {
@@ -173,6 +167,26 @@ public class AllTasks {
                 .filter(animal -> animal.type().equals(Animal.Type.FISH))
                 .max(Comparator.comparingInt(Animal::weight))
                 .orElse(null);
+    }
+
+    public static Map<String, Set<ValidationError>> task19(Collection<Animal> animals) {
+        return
+            animals
+                .stream()
+                .collect(Collectors.toMap(
+                    Animal::name,
+                    ValidationError::validateErrors
+                ));
+    }
+
+    public static Map<String, String> task20(Collection<Animal> animals) {
+        return
+            animals
+                .stream()
+                .collect(Collectors.toMap(
+                    Animal::name,
+                    animal -> ValidationError.validateErrors(animal).toString()
+                ));
     }
 
     private AllTasks() {

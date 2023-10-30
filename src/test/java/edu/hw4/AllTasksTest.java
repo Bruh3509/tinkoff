@@ -6,6 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.logging.Logger;
 
 public class AllTasksTest {
 
@@ -26,6 +28,12 @@ public class AllTasksTest {
         STRELKA,
         BELKA
     );
+    private static final Animal ALEX_ERROR = new Animal("Alex", Animal.Type.CAT, Animal.Sex.M, 60, 250, 15, true);
+    private static final Animal KESHA_ERROR = new Animal("Kesha", Animal.Type.BIRD, Animal.Sex.M, -1, 10, 5, true);
+    private static final Animal DORI_ERROR = new Animal("Dori", Animal.Type.FISH, Animal.Sex.F, 3, 5, 7, false);
+
+    private static final List<Animal> ERRORS_ANIMALS = List.of(ALEX_ERROR, KESHA_ERROR, DORI_ERROR);
+    private static final Logger LOGGER = Logger.getLogger("Task20 Logger");
 
     @Test
     @DisplayName("Task1 Test")
@@ -318,5 +326,31 @@ public class AllTasksTest {
 
         // assert
         assertThat(theHeaviestFish).isEqualTo(DORI);
+    }
+
+    @Test
+    @DisplayName("Task19 Test")
+    void testTask19() {
+        // act
+        final var animalsWithErrors = AllTasks.task19(ERRORS_ANIMALS);
+
+        // assert
+        assertThat(animalsWithErrors).containsAllEntriesOf(
+            Map.ofEntries(
+                Map.entry("Alex", Set.of(new ValidationError("Age"), new ValidationError("Height"))),
+                Map.entry("Kesha", Set.of(new ValidationError("Age"))),
+                Map.entry("Dori", Set.of())
+            )
+        );
+    }
+
+    @Test
+    @DisplayName("Task20 Test")
+    void testTask20() {
+        // act
+        final var animalsWithErrors = AllTasks.task20(ERRORS_ANIMALS);
+
+        // assert
+        animalsWithErrors.forEach((key, value) -> LOGGER.info(key + " " + value));
     }
 }
