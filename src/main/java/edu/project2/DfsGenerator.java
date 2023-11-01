@@ -83,7 +83,7 @@ public final class DfsGenerator implements MazeGenerator {
         var cellsRow = cell.coordinate().row();
         var cellsColumn = cell.coordinate().column();
 
-        // Define neighbour cells
+        // Define neighbour cells // TODO
         var up = new Cell(new Coordinate(cellsRow - 2, cellsColumn), Cell.Type.PASSAGE);
         var down = new Cell(new Coordinate(cellsRow + 2, cellsColumn), Cell.Type.PASSAGE);
         var left = new Cell(new Coordinate(cellsRow, cellsColumn - 2), Cell.Type.PASSAGE);
