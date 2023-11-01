@@ -92,7 +92,8 @@ public final class DfsGenerator implements MazeGenerator {
 
         return
             Arrays.stream(neighbourCells)
-                .filter(c -> unvisitedCells.contains(c) && c.coordinate().row() > 0 && c.coordinate().row() < matrix.length - 1 &&
+                .filter(c -> unvisitedCells.contains(c) && c.coordinate().row() > 0 &&
+                    c.coordinate().row() < matrix.length - 1 &&
                     c.coordinate().column() > 0 && c.coordinate().column() < matrix[0].length - 1)
                 .toList();
     }
