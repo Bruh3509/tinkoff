@@ -1,21 +1,32 @@
 package edu.project2;
 
-public final class MazeRender implements Render {
+import java.util.Deque;
+
+public final class SolvedMazeRender implements Render {
     private final Maze maze;
+    private final Deque<Coordinate> route;
     private final String mazeWall;
+    private final String mazeRouteCell;
     private static final String MAZE_CELL = "  ";
 
-    public MazeRender(Maze maze, String mazeWall) {
+    public SolvedMazeRender(Maze maze, Deque<Coordinate> route, String mazeWall, String mazeRouteCell) {
         this.maze = maze;
+        this.route = route;
         this.mazeWall = mazeWall.repeat(2);
+        this.mazeRouteCell = mazeRouteCell.repeat(2);
     }
 
+    @Override
     public String renderMaze() {
         var matrix = maze.matrix();
         StringBuilder resultString = new StringBuilder();
         for (var cells : matrix) {
             for (var cell : cells) {
-                if (cell.type().equals(Cell.Type.WALL)) {
+                if (route.contains(cell.coordinate())) {
+                    route.remove(cell.coordinate());
+                    //System.out.print(mazeRouteCell);
+                    resultString.append(mazeRouteCell);
+                } else if (cell.type().equals(Cell.Type.WALL)) {
                     //System.out.print(mazeWall);
                     resultString.append(mazeWall);
                 } else {

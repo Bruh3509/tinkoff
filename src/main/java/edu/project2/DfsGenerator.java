@@ -2,13 +2,13 @@ package edu.project2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 
 public final class DfsGenerator implements MazeGenerator {
     private final List<Cell> unvisitedCells;
-    private Cell[][] matrix;
 
     public DfsGenerator() {
         unvisitedCells = new ArrayList<>();
@@ -16,12 +16,15 @@ public final class DfsGenerator implements MazeGenerator {
 
     @Override
     public Maze generate(int height, int width) {
-        matrix = generateRawMatrix(height, width);
+        if (height < 5 || width < 5) {
+            throw new InputMismatchException();
+        }
+        var matrix = generateRawMatrix(height, width);
         Stack<Cell> cellsStack = new Stack<>();
 
         var currentCell = matrix[1][1];
         unvisitedCells.remove(currentCell);
-        do {
+        while (!unvisitedCells.isEmpty()) {
             Random random = new Random();
             var unvisitedNeighbours = getUnvisitedNeighbours(currentCell);
             if (!unvisitedNeighbours.isEmpty()) {
@@ -37,9 +40,9 @@ public final class DfsGenerator implements MazeGenerator {
             } else {
                 currentCell = unvisitedCells.remove(Math.abs(random.nextInt()) % unvisitedCells.size());
             }
-        } while (!unvisitedCells.isEmpty());
+        }
 
-        return new Maze(height, width, matrix);
+        return new Maze(matrix);
     }
 
     private Cell[][] generateRawMatrix(int height, int width) {
@@ -64,7 +67,7 @@ public final class DfsGenerator implements MazeGenerator {
         var cellsRow = cell.coordinate().row();
         var cellsColumn = cell.coordinate().column();
 
-        // Define neighbour cells // TODO
+        // Define neighbour cells
         var up = new Cell(new Coordinate(cellsRow - 2, cellsColumn), Cell.Type.PASSAGE);
         var down = new Cell(new Coordinate(cellsRow + 2, cellsColumn), Cell.Type.PASSAGE);
         var left = new Cell(new Coordinate(cellsRow, cellsColumn - 2), Cell.Type.PASSAGE);
@@ -73,9 +76,7 @@ public final class DfsGenerator implements MazeGenerator {
 
         return
             Arrays.stream(neighbourCells)
-                .filter(c -> unvisitedCells.contains(c) && c.coordinate().row() > 0 &&
-                    c.coordinate().row() < matrix.length - 1 &&
-                    c.coordinate().column() > 0 && c.coordinate().column() < matrix[0].length - 1)
+                .filter(unvisitedCells::contains)
                 .toList();
     }
 
