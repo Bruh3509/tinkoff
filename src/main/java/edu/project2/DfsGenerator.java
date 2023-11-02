@@ -26,29 +26,10 @@ public final class DfsGenerator implements MazeGenerator {
             var unvisitedNeighbours = getUnvisitedNeighbours(currentCell);
             if (!unvisitedNeighbours.isEmpty()) {
                 cellsStack.push(currentCell);
-                var currentCellCoordinate = currentCell.coordinate();
                 var randomNeighbourCell =
                     unvisitedNeighbours.get(Math.abs(random.nextInt()) % unvisitedNeighbours.size());
-                var cellsCoordinate = randomNeighbourCell.coordinate();
-
-                var newCellRow = currentCellCoordinate.row();
-                if ((currentCellCoordinate.row() - cellsCoordinate.row()) > 0) {
-                    newCellRow -= 1;
-                } else if ((currentCellCoordinate.row() - cellsCoordinate.row()) < 0) {
-                    newCellRow += 1;
-                }
-
-                var newCellCol = currentCellCoordinate.column();
-                if ((currentCellCoordinate.column() - cellsCoordinate.column()) > 0) {
-                    newCellCol -= 1;
-                } else if ((currentCellCoordinate.column() - cellsCoordinate.column()) < 0) {
-                    newCellCol += 1;
-                }
-
-                matrix[newCellRow][newCellCol] = new Cell(
-                    new Coordinate(newCellRow, newCellCol),
-                    Cell.Type.PASSAGE
-                );
+                var newCell = getWallCell(currentCell, randomNeighbourCell);
+                matrix[newCell.coordinate().row()][newCell.coordinate().column()] = newCell;
                 unvisitedCells.remove(randomNeighbourCell);
                 currentCell = randomNeighbourCell;
             } else if (!cellsStack.isEmpty()) {
@@ -96,5 +77,26 @@ public final class DfsGenerator implements MazeGenerator {
                     c.coordinate().row() < matrix.length - 1 &&
                     c.coordinate().column() > 0 && c.coordinate().column() < matrix[0].length - 1)
                 .toList();
+    }
+
+    private Cell getWallCell(Cell currentCell, Cell randomNeighbourCell) {
+        var currentCellCoordinate = currentCell.coordinate();
+        var cellsCoordinate = randomNeighbourCell.coordinate();
+
+        var newCellRow = currentCellCoordinate.row();
+        if ((currentCellCoordinate.row() - cellsCoordinate.row()) > 0) {
+            newCellRow -= 1;
+        } else if ((currentCellCoordinate.row() - cellsCoordinate.row()) < 0) {
+            newCellRow += 1;
+        }
+
+        var newCellCol = currentCellCoordinate.column();
+        if ((currentCellCoordinate.column() - cellsCoordinate.column()) > 0) {
+            newCellCol -= 1;
+        } else if ((currentCellCoordinate.column() - cellsCoordinate.column()) < 0) {
+            newCellCol += 1;
+        }
+
+        return new Cell(new Coordinate(newCellRow, newCellCol), Cell.Type.PASSAGE);
     }
 }

@@ -1,17 +1,23 @@
 package edu.project2;
 
 public class MazeRender {
-    public static void main(String[] args) {
-        DfsGenerator generator = new DfsGenerator();
-        Maze maze = generator.generate(50, 50);
-        String string = "█";
+    private final Maze maze;
+    private final String mazeWall;
+    private static final String mazeCell = "  ";
+
+    public MazeRender(Maze maze, String mazeWall) {
+        this.maze = maze;
+        this.mazeWall = mazeWall.repeat(2);
+    }
+
+    public void printMaze() {
         var matrix = maze.getMatrix();
-        for (Cell[] cells : matrix) {
-            for (Cell cell : cells) {
+        for (var cells : matrix) {
+            for (var cell : cells) {
                 if (cell.type().equals(Cell.Type.WALL)) {
-                    System.out.print(string + string);
+                    System.out.print(mazeWall);
                 } else {
-                    System.out.print("  ");
+                    System.out.print(mazeCell);
                 }
             }
             System.out.print('\n');
