@@ -16,17 +16,13 @@ public final class MazeRender implements Render {
         for (var cells : matrix) {
             for (var cell : cells) {
                 if (cell.type().equals(Cell.Type.WALL)) {
-                    //System.out.print(mazeWall);
                     resultString.append(mazeWall);
                 } else {
-                    //System.out.print(MAZE_CELL);
                     resultString.append(MAZE_CELL);
                 }
             }
-            //System.out.print('\n');
             resultString.append('\n');
         }
-        //System.out.print('\n');
         resultString.append('\n');
         return resultString.toString();
     }

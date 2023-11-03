@@ -1,11 +1,12 @@
 package edu.project2;
 
 public class Main {
-    private static final int HEIGHT = 5;
-    private static final int WIDTH = 5;
+    private static final int HEIGHT = 49;
+    private static final int WIDTH = 49;
     private static final String MAZE_WALL = "█";
     private static final String MAZE_ROUTE_CELL = "◆";
 
+    @SuppressWarnings("RegexpSinglelineJava")
     public static void main(String[] args) {
         var mazeGenerator = new DfsGenerator();
         var maze = mazeGenerator.generate(HEIGHT, WIDTH);
@@ -20,5 +21,8 @@ public class Main {
         var renderedSolvedMaze = solvedMazeRender.renderMaze();
         System.out.print(renderedMaze);
         System.out.print(renderedSolvedMaze);
+    }
+
+    private Main() {
     }
 }

@@ -9,6 +9,7 @@ import java.util.Stack;
 
 public final class DfsGenerator implements MazeGenerator {
     private final List<Cell> unvisitedCells;
+    private static final int MINIMAL_MAZE_SIZE = 5;
 
     public DfsGenerator() {
         unvisitedCells = new ArrayList<>();
@@ -16,16 +17,16 @@ public final class DfsGenerator implements MazeGenerator {
 
     @Override
     public Maze generate(int height, int width) {
-        if (height < 5 || width < 5) {
+        if (height < MINIMAL_MAZE_SIZE || width < MINIMAL_MAZE_SIZE) {
             throw new InputMismatchException();
         }
         var matrix = generateRawMatrix(height, width);
         Stack<Cell> cellsStack = new Stack<>();
 
+        Random random = new Random();
         var currentCell = matrix[1][1];
         unvisitedCells.remove(currentCell);
         while (!unvisitedCells.isEmpty()) {
-            Random random = new Random();
             var unvisitedNeighbours = getUnvisitedNeighbours(currentCell);
             if (!unvisitedNeighbours.isEmpty()) {
                 cellsStack.push(currentCell);
