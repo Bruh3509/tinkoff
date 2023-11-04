@@ -10,7 +10,6 @@ import java.util.Stack;
 
 public final class DfsSolver implements MazeSolver {
     private final List<Cell> unvisitedCells;
-    private Cell[][] matrix;
 
     public DfsSolver() {
         unvisitedCells = new ArrayList<>();
@@ -19,7 +18,7 @@ public final class DfsSolver implements MazeSolver {
     @Override
     public Deque<Coordinate> solve(Maze maze, Coordinate begin, Coordinate end) {
         Deque<Coordinate> resultRoute = new LinkedList<>();
-        matrix = maze.matrix();
+        Cell[][] matrix = maze.matrix();
         fillUnvisitedCells(matrix);
         var currentCell = matrix[begin.row()][begin.column()];
         unvisitedCells.remove(currentCell);
@@ -60,7 +59,6 @@ public final class DfsSolver implements MazeSolver {
         var cellsRow = cell.coordinate().row();
         var cellsColumn = cell.coordinate().column();
 
-        // Define neighbour cells
         var up = new Cell(new Coordinate(cellsRow - 1, cellsColumn), Cell.Type.PASSAGE);
         var down = new Cell(new Coordinate(cellsRow + 1, cellsColumn), Cell.Type.PASSAGE);
         var left = new Cell(new Coordinate(cellsRow, cellsColumn - 1), Cell.Type.PASSAGE);

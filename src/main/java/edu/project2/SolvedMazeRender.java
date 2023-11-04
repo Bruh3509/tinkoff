@@ -24,20 +24,15 @@ public final class SolvedMazeRender implements Render {
             for (var cell : cells) {
                 if (route.contains(cell.coordinate())) {
                     route.remove(cell.coordinate());
-                    //System.out.print(mazeRouteCell);
                     resultString.append(mazeRouteCell);
                 } else if (cell.type().equals(Cell.Type.WALL)) {
-                    //System.out.print(mazeWall);
                     resultString.append(mazeWall);
                 } else {
-                    //System.out.print(MAZE_CELL);
                     resultString.append(MAZE_CELL);
                 }
             }
-            //System.out.print('\n');
             resultString.append('\n');
         }
-        //System.out.print('\n');
         resultString.append('\n');
         return resultString.toString();
     }
