@@ -1,8 +1,8 @@
 package edu.project2;
 
 public class Main {
-    private static final int HEIGHT = 49;
-    private static final int WIDTH = 49;
+    private static final int HEIGHT = 29;
+    private static final int WIDTH = 29;
     private static final String MAZE_WALL = "█";
     private static final String MAZE_ROUTE_CELL = "◆";
 

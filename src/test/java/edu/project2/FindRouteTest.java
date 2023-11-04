@@ -6,15 +6,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FindRouteTest {
-    private static final String RENDERED_MAZE =
-        """
-            ██████████
-            ██      ██
-            ██████████
-            ██      ██
-            ██████████
-
-            """;
 
     private static Coordinate[] goodPoints() {
         return new Coordinate[] {
@@ -42,7 +33,7 @@ public class FindRouteTest {
         var solutionGenerator = new DfsSolver();
 
         // act
-        var resultRoute = solutionGenerator.solve(maze, new Coordinate(1,1), goodPoint);
+        var resultRoute = solutionGenerator.solve(maze, new Coordinate(1, 1), goodPoint);
 
         // assert
         assertThat(resultRoute).isNotEmpty();
