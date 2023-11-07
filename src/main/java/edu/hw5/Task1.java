@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class Task1 {
+public class Task1 { // TODO simplify code with streams
     public static String getAverageSessionTime(String[] sessions) {
         List<Duration> sessionTime = new ArrayList<>();
         for (var session : sessions) {
@@ -46,6 +46,6 @@ public class Task1 {
         return sessionTime
             .stream()
             .map(Duration::getSeconds)
-            .reduce(0L, Long::sum) / sessionTime.size();
+            .reduce(0L, Long::sum) / sessionTime.size(); // TODO mapToLong + sum
     }
 }
