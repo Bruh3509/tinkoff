@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class Task1Test {
     @Test
     @DisplayName("Task1 Test")
-    void task1Test() {
+    void testTask1() {
         // arrange
         String[] sessions = new String[] {
             "2022-03-12, 20:20 - 2022-03-12, 23:50",
@@ -18,6 +18,6 @@ public class Task1Test {
         var result = Task1.getAverageSessionTime(sessions);
 
         // assert
-        assertThat(result).isEqualTo("3h 40m 0s\n");
+        assertThat(result).isEqualTo("3h 40m\n");
     }
 }

@@ -2,16 +2,17 @@ package edu.hw5;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class Task1 { // TODO simplify code with streams
+public class Task1 {
     public static String getAverageSessionTime(String[] sessions) {
         List<Duration> sessionTime = new ArrayList<>();
         for (var session : sessions) {
-            var pattern = Pattern.
-                compile("(\\d{4}-\\d{2}-\\d{2}, \\d{2}:\\d{2}) - (\\d{4}-\\d{2}-\\d{2}, \\d{2}:\\d{2})");
+            var pattern = Pattern
+                .compile("(\\d{4}-\\d{2}-\\d{2}, \\d{2}:\\d{2}) - (\\d{4}-\\d{2}-\\d{2}, \\d{2}:\\d{2})");
             var matcher = pattern.matcher(session);
             if (matcher.find()) {
                 var sessionDuration = getDurationOfTheSession(matcher.group(1), matcher.group(2));
@@ -22,13 +23,11 @@ public class Task1 { // TODO simplify code with streams
         var averageResult = getAverageResult(sessionTime);
         var hours = averageResult / 3600;
         var minutes = averageResult / 60 - hours * 60;
-        var seconds = averageResult % 60;
 
         return String.format(
-            "%dh %dm %ds\n",
+            "%dh %dm\n",
             hours,
-            minutes,
-            seconds
+            minutes
         );
     }
 
@@ -45,7 +44,10 @@ public class Task1 { // TODO simplify code with streams
     private static long getAverageResult(List<Duration> sessionTime) {
         return sessionTime
             .stream()
-            .map(Duration::getSeconds)
-            .reduce(0L, Long::sum) / sessionTime.size(); // TODO mapToLong + sum
+            .mapToLong(Duration::getSeconds)
+            .sum() / sessionTime.size();
+    }
+
+    private Task1() {
     }
 }
