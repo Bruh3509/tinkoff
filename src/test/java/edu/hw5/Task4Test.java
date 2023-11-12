@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestTask4 {
+public class Task4Test {
     static String[] securePasswords() {
         return new String[] {
             "12^7asd",
