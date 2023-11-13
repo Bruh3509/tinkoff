@@ -2,12 +2,13 @@ package edu.hw5;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 public class Task1 {
+    private static final int TIME_CONST = 60;
+
     public static String getAverageSessionTime(String[] sessions) {
         List<Duration> sessionTime = new ArrayList<>();
         for (var session : sessions) {
@@ -21,8 +22,8 @@ public class Task1 {
         }
 
         var averageResult = getAverageResult(sessionTime);
-        var hours = averageResult / 3600;
-        var minutes = averageResult / 60 - hours * 60;
+        var hours = averageResult / (int) Math.pow(TIME_CONST, 2);
+        var minutes = averageResult / TIME_CONST - hours * TIME_CONST;
 
         return String.format(
             "%dh %dm\n",

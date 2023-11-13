@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Task3 {
@@ -20,18 +19,18 @@ public class Task3 {
     private static final String FORMAT7 = "yesterday";
 
     public static Optional<LocalDate> parseDate(String date) {
-        switch (date) {
-            case FORMAT5 -> {
-                return Optional.of(LocalDate.now().plusDays(1));
-            }
-            case FORMAT6 -> {
-                return Optional.of(LocalDate.now());
-            }
-            case FORMAT7 -> {
-                return Optional.of(LocalDate.now().minusDays(1));
-            }
-        }
+        return switch (date) {
+            case FORMAT5 -> Optional.of(LocalDate.now().plusDays(1));
 
+            case FORMAT6 -> Optional.of(LocalDate.now());
+
+            case FORMAT7 -> Optional.of(LocalDate.now().minusDays(1));
+
+            default -> parseDateTimePattern(date);
+        };
+    }
+
+    private static Optional<LocalDate> parseDateTimePattern(String date) {
         var pattern = Pattern.compile("(\\d+) day(s)? ago");
         var matcher = pattern.matcher(date);
         if (matcher.find()) {

@@ -26,7 +26,7 @@ public class Task2 {
         return resultDates;
     }
 
-    public static LocalDate getNearestFridayThirteen(LocalDate date) { // TODO
+    public static LocalDate getNearestFridayThirteen(LocalDate date) {
         var localDate = date;
         do {
             localDate = localDate.with(TemporalAdjusters.next(DayOfWeek.FRIDAY));

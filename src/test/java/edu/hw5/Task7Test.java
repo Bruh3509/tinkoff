@@ -32,7 +32,8 @@ public class Task7Test {
             "aba",
             "aboba",
             "0101",
-            "1000"
+            "1000",
+            "10100"
         };
     }
 
