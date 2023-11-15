@@ -1,12 +1,11 @@
 package edu.hw6;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
 
-public class Task2 {
+public class CopyFile {
     public static String cloneFile(Path path) throws IOException {
         var fileDirectory = path.getParent();
         var fileName = path.getName(path.getNameCount() - 1).toString().split("\\.");
@@ -21,6 +20,7 @@ public class Task2 {
         return name + copyString + extension;
     }
 
+    @SuppressWarnings("MagicNumber")
     private static String copyCalculation(Path fileDirectory, Pattern pattern) {
         int maxCopy = 0;
         var copyString = " - copy (1)";
@@ -43,6 +43,6 @@ public class Task2 {
         return copyString;
     }
 
-    private Task2() {
+    private CopyFile() {
     }
 }
