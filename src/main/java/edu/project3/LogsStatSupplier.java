@@ -17,10 +17,10 @@ public final class LogsStatSupplier {
     }
 
     public static String getAverageResponseSize(List<LogNGINX> logs) {
-        return logs.stream()
+        return Math.round(logs.stream()
             .mapToInt(LogNGINX::bytesSent)
             .average()
-            .orElse(0)
+            .orElse(0))
             + "b";
     }
 

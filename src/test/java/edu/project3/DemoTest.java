@@ -2,13 +2,14 @@ package edu.project3;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class DemoTest {
     @Test
     @DisplayName("Demo Test")
-    void testOutput() {
+    void testOutput() throws IOException {
         Path path = Paths.get("src", "main", "resources", "logs.txt");
         var logs = LogParser.getLogsList(path);
 
@@ -23,7 +24,9 @@ public class DemoTest {
          */
 
         InfoPrinter printer = new ConsolePrinter(logs, path, null, null);
-
         printer.print();
+
+        InfoPrinter printer1 = new MarkdownPrinter(logs, path, null, null);
+        printer1.print();
     }
 }
