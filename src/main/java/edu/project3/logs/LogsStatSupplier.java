@@ -7,6 +7,17 @@ import java.util.stream.Collectors;
 import org.jetbrains.annotations.NotNull;
 
 public final class LogsStatSupplier {
+    private static final int MIN_INFORMATIONAL = 100;
+    private static final int MAX_INFORMATIONAL = 199;
+    private static final int MIN_SUCCESSFUL = 200;
+    private static final int MAX_SUCCESSFUL = 299;
+    private static final int MIN_REDIRECTION = 300;
+    private static final int MAX_REDIRECTION = 399;
+    private static final int MIN_CLIENT_ERROR = 400;
+    private static final int MAX_CLIENT_ERROR = 499;
+    private static final int MIN_SERVER_ERROR = 500;
+    private static final int MAX_SERVER_ERROR = 599;
+
     public static final Map<Integer, String> STATUS_NAME
         = Map.ofEntries(
         Map.entry(200, "OK"),
@@ -57,20 +68,21 @@ public final class LogsStatSupplier {
             .toList();
     }
 
+    @SuppressWarnings("ReturnCount")
     private static String getCodeClass(int code) {
-        if (code >= 100 && code <= 199) {
+        if (code >= MIN_INFORMATIONAL && code <= MAX_INFORMATIONAL) {
             return "Informational";
         }
-        if (code >= 200 && code <= 299) {
+        if (code >= MIN_SUCCESSFUL && code <= MAX_SUCCESSFUL) {
             return "Successful";
         }
-        if (code >= 300 && code <= 399) {
+        if (code >= MIN_REDIRECTION && code <= MAX_REDIRECTION) {
             return "Redirection";
         }
-        if (code >= 400 && code <= 499) {
+        if (code >= MIN_CLIENT_ERROR && code <= MAX_CLIENT_ERROR) {
             return "Client Error";
         }
-        if (code >= 500 && code <= 599) {
+        if (code >= MIN_SERVER_ERROR && code <= MAX_SERVER_ERROR) {
             return "Server error";
         }
         return "Undefined";
