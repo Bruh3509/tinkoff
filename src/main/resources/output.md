@@ -1,26 +1,22 @@
 #### General Information
 | Metrics | Value |
 |:---------------------:|:-------------:|
-| Files |`logs.txt`|
-| Start date |null|
-| End date |null|
-| Requests Amount |15764|
-| Average Size |1634b|
+| Files |`[/elastic/examples/master/Common Data Formats/nginx_logs/nginx_logs]`|
+| Start date |2015-05-17T14:00Z|
+| End date |2015-05-17T16:00Z|
+| Requests Amount |253|
+| Average Size |293b|
 
 #### Requested Resources
 | Resource | Amount |
 |:---------------:|:-----------:|
-| `workforce.gif` | 6 |
-| `Future-proofed.js` | 6 |
-| `impactful.jpg` | 6 |
-| `national.hmtl` | 5 |
-| `internet%20solution.hmtl` | 5 |
+| `/downloads/product_2` | 154 |
+| `/downloads/product_1` | 99 |
 
 #### Status Codes
 | Code | Name | Amount |
 |:---:|:---------------------:|-----------:|
-| 200 | OK | 13106 |
-| 302 | Undefined | 552 |
-| 500 | Internal Server Error | 538 |
-| 301 | Undefined | 527 |
-| 400 | Undefined | 523 |
+| 404 | Not Found | 209 |
+| 304 | Not Modified | 33 |
+| 200 | OK | 9 |
+| 403 | Client Error | 2 |

@@ -1,5 +1,7 @@
-package edu.project3;
+package edu.project3.logs.printers;
 
+import edu.project3.logs.LogNGINX;
+import edu.project3.logs.LogsStatSupplier;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -10,20 +12,29 @@ import java.nio.file.Paths;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
+import org.jetbrains.annotations.NotNull;
 
 public final class MarkdownPrinter implements InfoPrinter {
+    private static final int MAX_RESOURCES = 5;
+    private static final int MAX_STATUS_CODES = 5;
     private final List<LogNGINX> logs;
-    private final Path path;
+    private final List<Path> path;
     private final OffsetDateTime from;
     private final OffsetDateTime to;
     private final File outputFile;
 
-    public MarkdownPrinter(List<LogNGINX> logs, Path path, OffsetDateTime from, OffsetDateTime to) throws IOException {
-        this.logs = logs;
-        this.path = path.getFileName();
+    public MarkdownPrinter(
+        List<LogNGINX> logs,
+        List<Path> path,
+        @NotNull OffsetDateTime from,
+        @NotNull OffsetDateTime to
+    )
+        throws IOException {
+        this.logs = LogsStatSupplier.getFilteredByDateLogs(logs, from, to);
+        this.path = path;
         this.from = from;
         this.to = to;
-        Path outputPath = Paths.get(path.getParent().toString(), "output.md");
+        Path outputPath = Paths.get("src", "main", "resources", "output.md");
         if (Files.exists(outputPath)) {
             Files.delete(outputPath);
         }
@@ -70,7 +81,7 @@ public final class MarkdownPrinter implements InfoPrinter {
                 .entrySet()
                 .stream()
                 .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
-                .limit(5)
+                .limit(MAX_RESOURCES)
                 .forEach(entry -> {
                     try {
                         fileWriter.write(String.format(
@@ -98,7 +109,7 @@ public final class MarkdownPrinter implements InfoPrinter {
                 .entrySet()
                 .stream()
                 .sorted(Map.Entry.<Map.Entry<Integer, String>, Long>comparingByValue().reversed())
-                .limit(5)
+                .limit(MAX_STATUS_CODES)
                 .forEach(entry -> {
                     try {
                         fileWriter.write(String.format(
