@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class CopyFileTest {
     @Test
     @DisplayName("Test Task2")
-    void testTask2() throws IOException { // TODO testing
+    void testTask2() throws IOException {
         // arrange
         Path path = Paths.get(".", "src", "main", "resources", "test.txt");
         Path file;
