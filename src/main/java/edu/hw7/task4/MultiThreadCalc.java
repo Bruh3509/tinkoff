@@ -2,17 +2,21 @@ package edu.hw7.task4;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MultiThreadCalc implements PiCalculation {
     private long iterations;
-    private static long RADIUS = 100_000L;
+    private static final long RADIUS = 100_000L;
 
     public MultiThreadCalc(long iterations) {
         this.iterations = iterations;
     }
 
     @Override
+    @SuppressWarnings("MagicNumber")
     public double calculatePi() {
         int optimalThreads = Runtime.getRuntime().availableProcessors();
         List<Future<Long>> circlesPointsCount = new ArrayList<>();
