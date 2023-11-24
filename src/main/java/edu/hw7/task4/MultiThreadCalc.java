@@ -8,7 +8,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MultiThreadCalc implements PiCalculation {
-    private long iterations;
+    private final long iterations;
     private static final long RADIUS = 100_000L;
 
     public MultiThreadCalc(long iterations) {
