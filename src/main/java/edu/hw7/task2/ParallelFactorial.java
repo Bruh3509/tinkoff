@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 public class ParallelFactorial {
     public static BigInteger parallelFactorial(int number) {
         if (number < 2) {
-            return BigInteger.valueOf(number);
+            return BigInteger.valueOf(1);
         }
         return IntStream.rangeClosed(2, number).parallel()
             .mapToObj(BigInteger::valueOf)
