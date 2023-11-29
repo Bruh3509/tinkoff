@@ -6,42 +6,39 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 public class ThreadPoolTest {
+    final Runnable fib1 = () -> {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(fibonacciCount(1));
+    };
+    final Runnable fib2 = () -> {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(fibonacciCount(2));
+    };
+    final Runnable fib3 = () -> {
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(fibonacciCount(3));
+    };
+    final Runnable fib10 = () -> {
+        System.out.println(fibonacciCount(10));
+    };
+
     @Test
-    @DisplayName("Fibonacci Numbers")
+    @DisplayName("Fibonacci Numbers 2 Threads")
     void testThreadPool() throws InterruptedException {
         // arrange
-        Runnable fib1 = () -> {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.println(fibonacciCount(1));
-        };
-        Runnable fib2 = () -> {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.println(fibonacciCount(2));
-        };
-        Runnable fib3 = () -> {
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.println(fibonacciCount(3));
-        };
-        Runnable fib10 = () -> {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.println(fibonacciCount(10));
-        };
+        // threads count < tasks count
         final int threads = 2;
 
         // act
@@ -52,6 +49,67 @@ public class ThreadPoolTest {
             threadPool.execute(fib2);
             threadPool.execute(fib3);
             threadPool.execute(fib10);
+        }
+        try (var threadPool1 = new FixedThreadPool()) {
+            threadPool1.create(threads);
+            threadPool1.execute(fib1);
+            threadPool1.execute(fib2);
+            threadPool1.execute(fib3);
+            threadPool1.execute(fib10);
+            threadPool1.start();
+        }
+    }
+
+    @Test
+    @DisplayName("Fibonacci Numbers 4 Threads")
+    void testThreadPool1() throws InterruptedException {
+        // arrange
+        // threads count == tasks count
+        final int threads = 4;
+
+        // act
+        try (var threadPool = new FixedThreadPool()) {
+            threadPool.create(threads);
+            threadPool.start();
+            threadPool.execute(fib1);
+            threadPool.execute(fib2);
+            threadPool.execute(fib3);
+            threadPool.execute(fib10);
+        }
+        try (var threadPool1 = new FixedThreadPool()) {
+            threadPool1.create(threads);
+            threadPool1.execute(fib1);
+            threadPool1.execute(fib2);
+            threadPool1.execute(fib3);
+            threadPool1.execute(fib10);
+            threadPool1.start();
+        }
+    }
+
+    @Test
+    @DisplayName("Fibonacci Numbers 6 Threads")
+    void testThreadPool2() throws InterruptedException {
+        // arrange
+        // threads count > tasks count
+        final int threads = 6;
+
+        // act
+        try (var threadPool = new FixedThreadPool()) {
+            threadPool.create(threads);
+            threadPool.start();
+            threadPool.execute(fib1);
+            threadPool.execute(fib2);
+            threadPool.execute(fib3);
+            threadPool.execute(fib10);
+        }
+
+        try (var threadPool1 = new FixedThreadPool()) {
+            threadPool1.create(threads);
+            threadPool1.execute(fib1);
+            threadPool1.execute(fib2);
+            threadPool1.execute(fib3);
+            threadPool1.execute(fib10);
+            threadPool1.start();
         }
     }
 

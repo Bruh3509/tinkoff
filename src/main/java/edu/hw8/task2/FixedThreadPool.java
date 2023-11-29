@@ -1,18 +1,19 @@
 package edu.hw8.task2;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 
 public class FixedThreadPool implements ThreadPool {
     private static final Logger LOGGER = Logger.getLogger("Fixed Thread Pool Logger");
     private Thread[] threads;
     private final BlockingQueue<Runnable> tasksQueue;
-    private boolean isStopped = false;
+    private final AtomicBoolean isStopped;
 
     public FixedThreadPool() {
         tasksQueue = new LinkedBlockingQueue<>();
+        isStopped = new AtomicBoolean(false);
     }
 
     // just initialize threads
@@ -41,7 +42,13 @@ public class FixedThreadPool implements ThreadPool {
     // close all threads
     @Override
     public void close() throws InterruptedException {
-        isStopped = true;
+        while (!tasksQueue.isEmpty()) {
+            Thread.sleep(1); // IDK how to optimize it :(
+        }
+        synchronized (tasksQueue) {
+            tasksQueue.notifyAll();
+        }
+        isStopped.set(true);
         for (var thread : threads) {
             thread.join();
         }
@@ -52,18 +59,22 @@ public class FixedThreadPool implements ThreadPool {
     private void runTask() {
         Runnable task;
 
-        while (!isStopped || !tasksQueue.isEmpty()) {
+        while (!isStopped.get()) {
             synchronized (tasksQueue) {
-                while (tasksQueue.isEmpty()) {
+                while (tasksQueue.isEmpty() && !isStopped.get()) {
                     try {
                         tasksQueue.wait();
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 }
+                if (isStopped.get()) {
+                    return;
+                }
                 task = tasksQueue.poll();
             }
             try {
+                assert task != null;
                 task.run();
             } catch (RuntimeException e) {
                 LOGGER.info(e.getMessage());
