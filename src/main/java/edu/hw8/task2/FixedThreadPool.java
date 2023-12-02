@@ -45,10 +45,11 @@ public class FixedThreadPool implements ThreadPool {
         while (!tasksQueue.isEmpty()) {
             Thread.sleep(1); // IDK how to optimize it :(
         }
+
+        isStopped.set(true);
         synchronized (tasksQueue) {
             tasksQueue.notifyAll();
         }
-        isStopped.set(true);
         for (var thread : threads) {
             thread.join();
         }
