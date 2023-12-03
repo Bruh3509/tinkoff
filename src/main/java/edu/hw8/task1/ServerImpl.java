@@ -12,12 +12,14 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 public class ServerImpl {
     private static final int PORT = 18080;
-    private static final int MAX_CAPACITY = 1;
-    //private static final Logger LOGGER = Logger.getLogger("Server Logger");
+    private static final int MAX_CAPACITY = 2;
+    private static final Logger LOGGER = Logger.getLogger("Server Logger");
+    private boolean isShutdown = false;
     private Selector selector;
     private ServerSocketChannel serverSocket;
     private final ExecutorService threadPool;
@@ -44,8 +46,12 @@ public class ServerImpl {
         processing();
     }
 
+    public void shutdown() {
+        isShutdown = true;
+    }
+
     private void processing() throws IOException {
-        while (true) {
+        while (!isShutdown) {
             selector.select();
             var selectedKeys = selector.selectedKeys();
             var iterator = selectedKeys.iterator();
@@ -55,7 +61,7 @@ public class ServerImpl {
                     register();
                 }
                 if (key.isReadable()) {
-                    threadPool.execute(() -> {
+                    threadPool.submit(() -> {
                         try {
                             answerToManager(key);
                         } catch (IOException e) {
@@ -73,7 +79,7 @@ public class ServerImpl {
         channelBlockingQueue.add(client);
         client.configureBlocking(false);
         client.register(selector, SelectionKey.OP_READ);
-        //LOGGER.info("New connection" + client.socket().getInetAddress());
+        LOGGER.info("New connection" + client.socket().getInetAddress());
     }
 
     private void answerToManager(SelectionKey key) throws IOException {

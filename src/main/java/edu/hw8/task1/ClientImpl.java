@@ -21,14 +21,16 @@ public class ClientImpl {
         LOGGER = Logger.getLogger(clientId.toString());
     }
 
-    public void sendToServer() throws IOException {
+    public String sendToServer() throws IOException {
         LOGGER.info(String.format("Client-%s input: ", clientId.toString()));
         var scanner = new Scanner(System.in);
         var input = scanner.nextLine();
 
-        var response = getResponse(input);
+        return getResponse(input);
+    }
 
-        LOGGER.info(String.format("Response to client-%s: %s", clientId.toString(), response));
+    public UUID getClientId() {
+        return clientId;
     }
 
     private String getResponse(@NotNull String input) throws IOException {
