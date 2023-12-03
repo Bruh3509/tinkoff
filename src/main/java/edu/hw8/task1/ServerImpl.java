@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 public class ServerImpl {
     private static final int PORT = 18080;
     private static final int MAX_CAPACITY = 2;
+    private static final int BUFFER_CAPACITY = 256;
     private static final Logger LOGGER = Logger.getLogger("Server Logger");
     private boolean isShutdown = false;
     private Selector selector;
@@ -82,6 +83,7 @@ public class ServerImpl {
         LOGGER.info("New connection" + client.socket().getInetAddress());
     }
 
+    @SuppressWarnings("MagicNumber")
     private void answerToManager(SelectionKey key) throws IOException {
         try (SocketChannel client = (SocketChannel) key.channel()) {
             var byteBuffer = ByteBuffer.allocate(256);
