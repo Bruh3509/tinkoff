@@ -12,6 +12,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
@@ -20,7 +21,7 @@ public class ServerImpl {
     private static final int MAX_CAPACITY = 2;
     private static final int BUFFER_CAPACITY = 256;
     private static final Logger LOGGER = Logger.getLogger("Server Logger");
-    private boolean isShutdown = false;
+    private AtomicBoolean isShutdown = new AtomicBoolean(false);
     private Selector selector;
     private ServerSocketChannel serverSocket;
     private final ExecutorService threadPool;
@@ -48,11 +49,11 @@ public class ServerImpl {
     }
 
     public void shutdown() {
-        isShutdown = true;
+        isShutdown.set(true);
     }
 
     private void processing() throws IOException {
-        while (!isShutdown) {
+        while (!isShutdown.get()) {
             selector.select();
             var selectedKeys = selector.selectedKeys();
             var iterator = selectedKeys.iterator();
