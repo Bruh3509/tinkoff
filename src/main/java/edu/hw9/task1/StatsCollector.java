@@ -1,4 +1,4 @@
-package edu.hw9;
+package edu.hw9.task1;
 
 import java.util.Map;
 import java.util.Set;
@@ -17,16 +17,6 @@ public class StatsCollector {
     }
 
     public void push(String metricsName, Double[] data) throws ExecutionException, InterruptedException {
-        /*
-        var sumFuture = THREAD_POOL.submit(() -> Arrays.stream(data).mapToDouble(Double::doubleValue).sum());
-        var averageFuture = THREAD_POOL
-            .submit(() -> Arrays.stream(data).mapToDouble(Double::doubleValue).average().orElse(0));
-        var maxFuture = THREAD_POOL
-            .submit(() -> Arrays.stream(data).mapToDouble(Double::doubleValue).max().orElse(0));
-        var minFuture = THREAD_POOL
-            .submit(() -> Arrays.stream(data).mapToDouble(Double::doubleValue).min().orElse(0));
-         */
-
         var statsFuture = THREAD_POOL
             .submit(() -> {
                 var sum = data[0];

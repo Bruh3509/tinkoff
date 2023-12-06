@@ -1,5 +1,6 @@
 package edu.hw9;
 
+import edu.hw9.task1.StatsCollector;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
