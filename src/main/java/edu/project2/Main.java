@@ -10,7 +10,9 @@ public class Main {
     public static void main(String[] args) {
         var mazeGenerator = new DfsGenerator();
         var maze = mazeGenerator.generate(HEIGHT, WIDTH);
-        var solutionGenerator = new DfsSolver();
+        var solutionGenerator =
+            new DfsSolverMultiThread(maze, new Coordinate(1, 1),
+                new Coordinate(HEIGHT - 2, WIDTH - 2));
         var solvedMaze = solutionGenerator.solve(maze, new Coordinate(1, 1),
             new Coordinate(HEIGHT - 2, WIDTH - 2)
         );
