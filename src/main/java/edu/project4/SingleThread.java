@@ -8,16 +8,16 @@ import java.util.Random;
 
 public class SingleThread implements Renderer {
     @Override
-    public FractalImage render(
+    public void render(
         FractalImage canvas,
         Rect world,
-        List<Transformation> variations,
+        List<Transformation> linear,
+        List<Transformation> notLinear,
         int samples,
         short iterPerSample,
         long seed
     ) {
         Random random = new Random();
-        List<Transformation> notLinearTrans = TransformationsUtility.getNotLinearTrans();
 
         Map<Transformation, Color> initColorToTrans = new HashMap<>();
         for (int num = 0; num < samples; ++num) {
@@ -26,8 +26,8 @@ public class SingleThread implements Renderer {
                 random.nextDouble(world.y1(), world.y2())
             );
 
-            var randTransform = variations.get(random.nextInt(0, variations.size()));
-            var randNotLinear = notLinearTrans.get(random.nextInt(0, notLinearTrans.size()));
+            var randTransform = linear.get(random.nextInt(0, linear.size()));
+            var randNotLinear = notLinear.get(random.nextInt(0, notLinear.size()));
 
             initColorToTrans.putIfAbsent(
                 randTransform,
@@ -36,6 +36,7 @@ public class SingleThread implements Renderer {
             for (short step = -20; step < iterPerSample; ++step) {
 
                 var newPoint = randNotLinear.apply(randTransform.apply(startPoint));
+                startPoint = newPoint;
 
                 if (step >= 0 && world.contains(newPoint)) {
                     // count coordinates
@@ -65,7 +66,5 @@ public class SingleThread implements Renderer {
                 }
             }
         }
-
-        return canvas;
     }
 }

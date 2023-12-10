@@ -4,10 +4,11 @@ import java.util.List;
 
 @FunctionalInterface
 public interface Renderer {
-    FractalImage render(
+    void render(
         FractalImage canvas,
         Rect world,
-        List<Transformation> variations,
+        List<Transformation> linear,
+        List<Transformation> notLinear,
         int samples,
         short iterPerSample,
         long seed

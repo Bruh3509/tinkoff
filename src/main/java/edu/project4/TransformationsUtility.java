@@ -6,14 +6,14 @@ import java.util.Map;
 import java.util.Random;
 
 public class TransformationsUtility {
-    private static final double leftBorder = -1.5;
-    private static final double rightBorder = 1.5;
+    private static final double leftBorder = -1;
+    private static final double rightBorder = 1;
 
     public static List<Transformation> getLinearTrans() {
         Random random = new Random();
         List<Transformation> result = new ArrayList<>();
 
-        while (result.size() < 10) {
+        while (result.size() < 40) {
             var a = random.nextDouble(leftBorder, rightBorder);
             var b = random.nextDouble(leftBorder, rightBorder);
             var d = random.nextDouble(leftBorder, rightBorder);
@@ -39,7 +39,18 @@ public class TransformationsUtility {
         return List.of(
             p -> new Point(Math.sin(p.x()), Math.sin(p.y())),
             p -> new Point(p.x() / (p.x() * p.x() + p.y() * p.y()), p.y() / (p.x() * p.x() + p.y() * p.y())),
-            p -> new Point(Math.atan(p.y() / p.x()) / Math.PI, Math.sqrt(p.x() * p.x() + p.y() * p.y()) - 1)
+            p -> new Point(Math.atan(p.y() / p.x()) / Math.PI, Math.sqrt(p.x() * p.x() + p.y() * p.y()) - 1),
+            p -> new Point(
+                Math.sqrt(p.x() * p.x() + p.y() * p.y()) *
+                    Math.sin(Math.sqrt(p.x() * p.x() + p.y() + p.y()) * Math.atan(p.y() / p.x())),
+                -1 * Math.sqrt(p.x() * p.x() + p.y() * p.y()) *
+                    Math.cos(Math.sqrt(p.x() * p.x() + p.y() * p.y()) * Math.atan(p.y() / p.x()))
+            ),
+            p -> new Point(
+                (1 / Math.PI) * Math.atan((p.y()) / p.x()) *
+                    Math.sin(Math.PI * Math.sqrt(p.x() * p.x() + p.y() * p.y())),
+                (1 / Math.PI) * Math.atan(p.y() / p.x()) * Math.cos(Math.PI * Math.sqrt(p.x() * p.x() + p.y() * p.y()))
+            )
         );
     }
 
