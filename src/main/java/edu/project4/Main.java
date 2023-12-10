@@ -1,18 +1,26 @@
 package edu.project4;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
-    private static final ImageProcessor gammaCorrection = canvas1 -> {
+    private static final int WIDTH = 1920;
+    private static final int HEIGHT = 1080;
+    private static final int SAMPLES = 5_000_000;
+    private static final short ITER_PER_SAMPLE = 20;
+    private static final int RAND_BOUND = 10000;
+    private static final double RECT_LEFT = -1.777;
+    private static final double RECT_RIGHT = 1.777;
+    private static final double RECT_BOT = -1;
+    private static final double RECT_TOP = 1;
+
+    @SuppressWarnings("MagicNumber")
+    private static final ImageProcessor GAMMA_CORRECTION = canvas1 -> {
         double max = 0.;
-        double gamma = 1.5;
+        double gamma = 1.2;
         var data = canvas1.data();
 
         for (int i = 0; i < data.length; ++i) {
@@ -46,11 +54,8 @@ public class Main {
     };
 
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
-        var canvas = FractalImage.create(1920, 1080);
+        var canvas = FractalImage.create(WIDTH, HEIGHT);
         var task = new MultiThread();
-        int samples = 1_000_000;
-        short iterPerSample = 20;
-        long seed = 10;
 
         var availableThreads = Runtime.getRuntime().availableProcessors();
         var executor = Executors.newFixedThreadPool(availableThreads);
@@ -60,23 +65,26 @@ public class Main {
         for (int i = 0; i < availableThreads; ++i) {
             executor.execute(() -> task.render(
                 canvas,
-                new Rect(-1.777, -1, 1.777, 1),
+                new Rect(RECT_LEFT, RECT_BOT, RECT_RIGHT, RECT_TOP),
                 linear,
                 notLinear,
-                Math.floorDiv(samples, availableThreads),
-                iterPerSample,
-                seed
+                Math.floorDiv(SAMPLES, availableThreads),
+                ITER_PER_SAMPLE,
+                0
             ));
         }
 
         executor.close();
 
-        gammaCorrection.accept(canvas);
+        GAMMA_CORRECTION.accept(canvas);
 
         var utils = new ImageUtils();
 
         utils.save(canvas, Path.of(".", "src", "main", "resources",
-            String.format("img%d.png", ThreadLocalRandom.current().nextInt(0, 10000))
+            String.format("img%d.png", ThreadLocalRandom.current().nextInt(0, RAND_BOUND))
         ), ImageFormat.PNG);
+    }
+
+    private Main() {
     }
 }

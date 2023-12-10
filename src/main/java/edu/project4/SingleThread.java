@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.Random;
 
 public class SingleThread implements Renderer {
+    private static final int COLOR_CONST = 256;
+    private static final short NOT_PAINT_TIME = -20;
+
     @Override
     public void render(
         FractalImage canvas,
@@ -31,9 +34,13 @@ public class SingleThread implements Renderer {
 
             initColorToTrans.putIfAbsent(
                 randTransform,
-                new Color(random.nextInt(0, 256), random.nextInt(0, 256), random.nextInt(0, 256))
+                new Color(
+                    random.nextInt(0, COLOR_CONST),
+                    random.nextInt(0, COLOR_CONST),
+                    random.nextInt(0, COLOR_CONST)
+                )
             );
-            for (short step = -20; step < iterPerSample; ++step) {
+            for (short step = NOT_PAINT_TIME; step < iterPerSample; ++step) {
 
                 var newPoint = randNotLinear.apply(randTransform.apply(startPoint));
                 startPoint = newPoint;
