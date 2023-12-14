@@ -24,12 +24,12 @@ public class Task2Test {
         var res1 = calc.fib(10);
         var res2 = calc.fib(12);
         var res3 = calc.fib(4);
-        var res4 = calc.fib(1);
+        var res4 = calc.fib(5);
 
         // assert
         assertThat(res1).isEqualTo(55);
         assertThat(res2).isEqualTo(144);
         assertThat(res3).isEqualTo(3);
-        assertThat(res4).isEqualTo(1);
+        assertThat(res4).isEqualTo(5);
     }
 }

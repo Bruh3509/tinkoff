@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.UUID;
 
 public class RandomObjectGenerator {
-    public static final Random random = new Random();
+    public static final Random RANDOM = new Random();
 
     public Object nextObject(Class<?> curClass) {
         try {
@@ -33,6 +33,7 @@ public class RandomObjectGenerator {
         return fabricHandle.invoke(curClass, params.getKey(), params.getValue());
     }
 
+    @SuppressWarnings("MagicNumber")
     private Map.Entry<String, Integer> getObject(Annotation[][] annotations) {
         int min = 0;
         int max = 100;
@@ -53,7 +54,7 @@ public class RandomObjectGenerator {
                 }
             }
         }
-        age = random.nextInt(min, max + 1);
+        age = RANDOM.nextInt(min, max + 1);
         return Map.entry(name, age);
     }
 }

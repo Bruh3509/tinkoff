@@ -15,13 +15,24 @@ public class MyProxy {
 
     private static final String PATH
         = Path.of("src", "main", "resources", "cache.txt").toString();
-    private static final HashMap<Long, Long> cache = readFromFile();
+    private static final HashMap<Long, Long> CACHE = readFromFile();
+
+    private static HashMap<Long, Long> readFromFile() {
+        File file = new File(PATH);
+        try (var reader = new ObjectInputStream(new FileInputStream(file))) {
+            return (HashMap<Long, Long>) reader.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static class FibCalc implements FibCalculator {
 
         @Override
+        @SuppressWarnings("MagicNumber")
         public long fib(long number) {
             if (number <= 2) {
+                CACHE.put(number, 1L);
                 return 1;
             }
 
@@ -33,7 +44,7 @@ public class MyProxy {
                 s = s + t;
             }
 
-            cache.put(number, s);
+            CACHE.put(number, s);
             return s;
         }
     }
@@ -48,30 +59,29 @@ public class MyProxy {
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             if (method.isAnnotationPresent(Cache.class)) {
-                if (method.getAnnotation(Cache.class).persist()) {
-                    writeToFile(args);
+                var ret = CACHE.get((Long) args[0]);
+
+                if (ret == null) {
+                    ret = (Long) method.invoke(original, args);
                 }
-                return cache.getOrDefault((Long) args[0], (Long) method.invoke(original, args));
+
+                if (method.getAnnotation(Cache.class).persist()) {
+                    writeToFile();
+                }
+
+                return ret;
             }
-            return method.invoke(proxy, args);
+            return method.invoke(original, args);
         }
 
-        private void writeToFile(Object[] args) {
+        private void writeToFile() {
             File file = new File(PATH);
             try (var writer = new ObjectOutputStream(new FileOutputStream(file))) {
-                writer.writeObject(cache);
+                writer.writeObject(CACHE);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
 
-    private static HashMap<Long, Long> readFromFile() {
-        File file = new File(PATH);
-        try (var reader = new ObjectInputStream(new FileInputStream(file))) {
-            return (HashMap<Long, Long>) reader.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            return new HashMap<>();
-        }
-    }
 }
