@@ -22,6 +22,7 @@ import org.openjdk.jmh.runner.options.TimeValue;
 
 @State(Scope.Thread)
 public class ReflectionBenchmark {
+    @SuppressWarnings({"UncommentedMain", "MagicNumber"})
     public static void main(String[] args) throws RunnerException {
         Options options = new OptionsBuilder()
             .include(ReflectionBenchmark.class.getSimpleName())
@@ -34,19 +35,11 @@ public class ReflectionBenchmark {
             .warmupIterations(1)
             .warmupTime(TimeValue.seconds(5))
             .measurementIterations(1)
-            .measurementTime(TimeValue.seconds(30))
+            .measurementTime(TimeValue.seconds(10))
             .build();
 
         new Runner(options).run();
     }
-
-    record Student(String name, String surname) {
-    }
-
-    private Student student;
-    private Method method;
-    private MethodHandle handler;
-    private Supplier<String> lambda;
 
     @Setup
     public void setup()
@@ -90,8 +83,16 @@ public class ReflectionBenchmark {
     }
 
     @Benchmark
-    public void lambdaMeta(Blackhole blackhole) throws Throwable {
+    public void lambdaMeta(Blackhole blackhole) {
         String name = lambda.get();
         blackhole.consume(name);
+    }
+
+    private Student student;
+    private Method method;
+    private MethodHandle handler;
+    private Supplier<String> lambda;
+
+    record Student(String name, String surname) {
     }
 }
