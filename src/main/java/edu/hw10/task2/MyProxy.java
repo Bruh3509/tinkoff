@@ -22,7 +22,7 @@ public class MyProxy {
         try (var reader = new ObjectInputStream(new FileInputStream(file))) {
             return (HashMap<Long, Long>) reader.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            return new HashMap<>();
         }
     }
 
@@ -32,7 +32,6 @@ public class MyProxy {
         @SuppressWarnings("MagicNumber")
         public long fib(long number) {
             if (number <= 2) {
-                CACHE.put(number, 1L);
                 return 1;
             }
 
@@ -44,7 +43,6 @@ public class MyProxy {
                 s = s + t;
             }
 
-            CACHE.put(number, s);
             return s;
         }
     }
@@ -63,6 +61,7 @@ public class MyProxy {
 
                 if (ret == null) {
                     ret = (Long) method.invoke(original, args);
+                    CACHE.put((Long) args[0], ret);
                 }
 
                 if (method.getAnnotation(Cache.class).persist()) {
