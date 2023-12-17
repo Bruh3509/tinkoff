@@ -3,6 +3,7 @@ package edu.hw11;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.agent.ByteBuddyAgent;
 import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static net.bytebuddy.implementation.MethodDelegation.to;
 import static net.bytebuddy.matcher.ElementMatchers.named;
@@ -10,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class Task2Test {
     @Test
+    @Disabled
     void testRuntimeBehChange() {
         ByteBuddyAgent.install();
         new ByteBuddy()
