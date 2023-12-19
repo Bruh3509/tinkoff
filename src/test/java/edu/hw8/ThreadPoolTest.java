@@ -42,16 +42,15 @@ public class ThreadPoolTest {
         final int threads = 2;
 
         // act
-        try (var threadPool = new FixedThreadPool()) {
-            threadPool.create(threads);
+        try (var threadPool = new FixedThreadPool(threads)) {
             threadPool.start();
             threadPool.execute(fib1);
             threadPool.execute(fib2);
             threadPool.execute(fib3);
             threadPool.execute(fib10);
         }
-        try (var threadPool1 = new FixedThreadPool()) {
-            threadPool1.create(threads);
+
+        try (var threadPool1 = new FixedThreadPool(threads)) {
             threadPool1.execute(fib1);
             threadPool1.execute(fib2);
             threadPool1.execute(fib3);
@@ -68,16 +67,15 @@ public class ThreadPoolTest {
         final int threads = 4;
 
         // act
-        try (var threadPool = new FixedThreadPool()) {
-            threadPool.create(threads);
+        try (var threadPool = new FixedThreadPool(threads)) {
             threadPool.start();
             threadPool.execute(fib1);
             threadPool.execute(fib2);
             threadPool.execute(fib3);
             threadPool.execute(fib10);
         }
-        try (var threadPool1 = new FixedThreadPool()) {
-            threadPool1.create(threads);
+
+        try (var threadPool1 = new FixedThreadPool(threads)) {
             threadPool1.execute(fib1);
             threadPool1.execute(fib2);
             threadPool1.execute(fib3);
@@ -94,8 +92,7 @@ public class ThreadPoolTest {
         final int threads = 6;
 
         // act
-        try (var threadPool = new FixedThreadPool()) {
-            threadPool.create(threads);
+        try (var threadPool = new FixedThreadPool(threads)) {
             threadPool.start();
             threadPool.execute(fib1);
             threadPool.execute(fib2);
@@ -103,8 +100,7 @@ public class ThreadPoolTest {
             threadPool.execute(fib10);
         }
 
-        try (var threadPool1 = new FixedThreadPool()) {
-            threadPool1.create(threads);
+        try (var threadPool1 = new FixedThreadPool(threads)) {
             threadPool1.execute(fib1);
             threadPool1.execute(fib2);
             threadPool1.execute(fib3);

@@ -1,24 +1,21 @@
 package edu.hw8.task2;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 
 public class FixedThreadPool implements ThreadPool {
     private static final Logger LOGGER = Logger.getLogger("Fixed Thread Pool Logger");
-    private Thread[] threads;
+    private final Thread[] threads;
     private final BlockingQueue<Runnable> tasksQueue;
-    private final AtomicBoolean isStopped;
+    private final Map<Long, Boolean> inProcess;
 
-    public FixedThreadPool() {
+    public FixedThreadPool(int nThreads) {
         tasksQueue = new LinkedBlockingQueue<>();
-        isStopped = new AtomicBoolean(false);
-    }
-
-    // just initialize threads
-    public void create(int nThreads) {
         threads = new Thread[nThreads];
+        inProcess = new HashMap<>();
     }
 
     // starting the threads that are waiting for tasks
@@ -27,6 +24,7 @@ public class FixedThreadPool implements ThreadPool {
         for (int i = 0; i < threads.length; ++i) {
             threads[i] = new Thread(this::runTask);
             threads[i].start();
+            inProcess.put(threads[i].threadId(), true);
         }
     }
 
@@ -35,7 +33,6 @@ public class FixedThreadPool implements ThreadPool {
     public void execute(Runnable runnable) {
         synchronized (tasksQueue) {
             tasksQueue.add(runnable);
-            tasksQueue.notify();
         }
     }
 
@@ -46,10 +43,13 @@ public class FixedThreadPool implements ThreadPool {
             Thread.sleep(1); // IDK how to optimize it :(
         }
 
-        isStopped.set(true);
-        synchronized (tasksQueue) {
-            tasksQueue.notifyAll();
+        for (var thread : threads) {
+            while (!inProcess.get(thread.threadId())) {
+                Thread.sleep(1); // the same problem
+            }
+            thread.interrupt();
         }
+
         for (var thread : threads) {
             thread.join();
         }
@@ -60,23 +60,17 @@ public class FixedThreadPool implements ThreadPool {
     private void runTask() {
         Runnable task;
 
-        while (!isStopped.get()) {
-            synchronized (tasksQueue) {
-                while (tasksQueue.isEmpty() && !isStopped.get()) {
-                    try {
-                        tasksQueue.wait();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                if (isStopped.get()) {
-                    return;
-                }
-                task = tasksQueue.poll();
-            }
+        while (!Thread.interrupted()) {
             try {
-                assert task != null;
+                task = tasksQueue.take();
+            } catch (InterruptedException ignored) {
+                return;
+            }
+
+            try {
+                inProcess.put(Thread.currentThread().threadId(), false);
                 task.run();
+                inProcess.put(Thread.currentThread().threadId(), true);
             } catch (RuntimeException e) {
                 LOGGER.info(e.getMessage());
             }
