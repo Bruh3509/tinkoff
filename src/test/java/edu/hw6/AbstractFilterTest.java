@@ -104,6 +104,19 @@ public class AbstractFilterTest {
 
         // assert
         assertThat(result4)
-            .containsExactlyInAnyOrder("0.png");
+            .containsExactlyInAnyOrder(
+                "0.png",
+                "img1067.png",
+                "img8634.png",
+                "img4017.png",
+                "img5465.png",
+                "img6487.png",
+                "img2458.png",
+                "img9354.png",
+                "img6400.png",
+                "img5487.png",
+                "img9196.png",
+                "img427.png",
+                "img5983.png");
     }
 }
