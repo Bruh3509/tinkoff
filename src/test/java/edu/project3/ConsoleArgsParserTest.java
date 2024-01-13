@@ -97,7 +97,22 @@ public class ConsoleArgsParserTest {
                 "src/main/resources/logs.txt",
                 "src/main/resources/output.adoc",
                 "src/main/resources/output.md",
-                "src/main/resources/short_logs.txt"
+                "src/main/resources/short_logs.txt",
+                "src/main/resources/img1067.png",
+                "src/main/resources/0.png",
+                "src/main/resources/img5983.png",
+                "src/main/resources/img8634.png",
+                "src/main/resources/img4017.png",
+                "src/main/resources/cache.txt",
+                "src/main/resources/img5465.png",
+                "src/main/resources/img6487.png",
+                "src/main/resources/img2458.png",
+                "src/main/resources/img9354.png",
+                "src/main/resources/img6400.png",
+                "src/main/resources/stats_jmh.md",
+                "src/main/resources/img5487.png",
+                "src/main/resources/img9196.png",
+                "src/main/resources/img427.png"
             );
     }
 
