@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 
-public class Task2Test {
+public class CopyFileTest {
     static Arguments[] badString() {
         return new Arguments[] {
             Arguments.of("()())"),
