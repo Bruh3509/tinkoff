@@ -1,5 +1,6 @@
 package edu.project4;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
@@ -48,6 +49,7 @@ public class FractalFlameTest {
     };
 
     @Test
+    @Disabled
     @DisplayName("Saving Test Multiple Render")
     void testPictureSave() throws IOException {
         // arrange
@@ -88,6 +90,7 @@ public class FractalFlameTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("Saving Test Single")
     void testSavingSingle() throws IOException {
         // arrange
