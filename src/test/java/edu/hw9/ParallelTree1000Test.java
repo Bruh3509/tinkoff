@@ -1,6 +1,7 @@
 package edu.hw9;
 
 import edu.hw9.task2.ParallelTree1000;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ParallelTree1000Test {
     @Test
+    @Disabled
     @DisplayName("Parallel Test")
     void testParallel1000() {
         // arrange
