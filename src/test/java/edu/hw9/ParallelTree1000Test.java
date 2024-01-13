@@ -41,17 +41,30 @@ public class ParallelTree1000Test {
         // assert
         Path path = Path.of(".", "target", "classes", "edu", "project2");
         Path path1 = Path.of(".", "src", "main", "java", "edu", "project2");
+        Path path2 = Path.of(".", "src", "main", "resources");
+        Path path3 = Path.of(".", "target", "classes", "edu", "project4");
+        Path path4 = Path.of(".", "src", "main", "java", "edu", "project4");
+        Path path5 = Path.of(".", "target", "generated-sources", "annotations", "edu", "project5", "jmh_generated");
+        Path path6 = Path.of(".", "target", "classes", "edu", "project5", "jmh_generated");
         assertThat(res1).containsExactlyInAnyOrder(
             path,
-            path1
+            path1,
+            path2,
+            path3,
+            path4
         );
         assertThat(res2).containsExactlyInAnyOrder(
             path,
+            path1,
+            path2,
+            path3,
+            path4,
+            path5,
+            path6,
             Path.of(".", "src", "main", "java", "edu", "hw1"),
             Path.of(".", "src", "main", "java", "edu", "hw2", "task3"),
             Path.of(".", "src", "main", "java", "edu", "hw5"),
             Path.of(".", "src", "main", "java", "edu", "project1"),
-            path1,
             Path.of(".", "src", "test", "java", "edu", "hw3"),
             Path.of(".", "src", "test", "java", "edu", "hw5"),
             Path.of(".", "target", "classes", "edu", "hw1"),
